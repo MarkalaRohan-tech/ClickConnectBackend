@@ -15,8 +15,22 @@ import adminRoutes from './routes/adminRoutes.js';
 import cookieParser from "cookie-parser";
 
 const app = express();
+const allowedOrigins = (process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((o) => o.trim());
 
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return cb(null, origin);
+      }
+      return cb(new Error("CORS blocked: " + origin), false);
+    },
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());

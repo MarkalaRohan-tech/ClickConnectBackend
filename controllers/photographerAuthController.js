@@ -87,9 +87,11 @@ export const login = async (req, res) => {
     // Store token in httpOnly cookie
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none", // allow cross-site (Netlify → Railway)
+      secure: true, // required for SameSite=None
       maxAge: 60 * 60 * 1000,
     });
+
 
     return res.json({
       message: "Login successful",
