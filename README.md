@@ -1,4 +1,4 @@
-# 📸 PhotoBook Server API
+# 📸 ClockConnect Server API
 
 A complete backend API for a photographer & videographer booking system built with Node.js, Express, and MongoDB.
 
