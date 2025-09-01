@@ -105,13 +105,16 @@ export const upsertImages = async (req, res) => {
     const { profilePic, portfolio } = req.body;
 
     // Convert array of URLs to objects matching schema
-    const portfolioObjects = portfolio.map((url) => ({ url, caption: "MyPortfolio" }));
+    const portfolioObjects = portfolio.map((url) => ({
+      url,
+      caption: "MyPortfolio",
+    }));
 
     const photographer = await Photographer.findByIdAndUpdate(
       id,
       {
         profilePic,
-        $push: { portfolio: { $each: portfolioObjects } },
+        portfolio: portfolioObjects, // Replace the entire portfolio array instead of pushing
       },
       { new: true }
     );
